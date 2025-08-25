@@ -14,8 +14,6 @@ if [ -z "$TAILSCALE_AUTH_KEY" ]; then
   log "Skipping Tailscale"
 
 else
-  log "Starting Tailscale"
-
   if [ -z "$TAILSCALE_HOSTNAME" ]; then
     if [ -z "$HEROKU_APP_NAME" ]; then
       tailscale_hostname=$(hostname)
@@ -30,9 +28,8 @@ else
   else
     tailscale_hostname="$TAILSCALE_HOSTNAME"
   fi
-  log "Using Tailscale hostname=$tailscale_hostname"
 
-  tailscaled -verbose ${TAILSCALED_VERBOSE:-0} --tun=userspace-networking --socks5-server=localhost:1055 &
+  tailscaled -verbose ${TAILSCALED_VERBOSE:-0} --tun=userspace-networking --socks5-server=localhost:1055 > /dev/null 2>&1 &
   until tailscale up \
     --authkey=${TAILSCALE_AUTH_KEY} \
     --hostname="$tailscale_hostname" \
