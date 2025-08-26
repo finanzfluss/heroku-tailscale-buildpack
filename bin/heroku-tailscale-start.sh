@@ -32,7 +32,7 @@ else
   tailscaled -verbose ${TAILSCALED_VERBOSE:-0} --tun=userspace-networking --socks5-server=localhost:1055 > /dev/null 2>&1 &
   until tailscale up \
     --authkey=${TAILSCALE_AUTH_KEY} \
-    --advertise-tags=tag:${TAILSCALE_ADVERTISE_TAGS} \
+    --advertise-tags=${TAILSCALE_ADVERTISE_TAGS} \
     --hostname="$tailscale_hostname" \
     --accept-dns=${TAILSCALE_ACCEPT_DNS:-true} \
     --accept-routes=${TAILSCALE_ACCEPT_ROUTES:-true} \
